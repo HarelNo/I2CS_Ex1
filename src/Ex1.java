@@ -1,4 +1,5 @@
-package assignments.Ex1;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 /**
  * Introduction to Computer Science 2026, Ariel University,
@@ -25,9 +26,8 @@ public class Ex1 {
 	 */
 	public static double f(double[] poly, double x) {
 		double ans = 0;
-		for(int i=0;i<poly.length;i++) {
-			double c = Math.pow(x, i);
-			ans += c*poly[i];
+		for(int i = 0 ;i < poly.length; i++) {
+			ans += Math.pow(x, i)*poly[i];
 		}
 		return ans;
 	}
@@ -75,11 +75,14 @@ public class Ex1 {
 	 * @return true iff p1 represents the same polynomial function as p2.
 	 */
 	public static boolean equals(double[] p1, double[] p2) {
-		boolean ans = true;
-        /** add you code below
-
-         /////////////////// */
-		return ans;
+		boolean ans = p1.length == p2.length;
+        if (!ans) {return false;};
+        for (int i = 0; i < p1.length; i++)
+        {
+            if ((p1[i]-p2[i] > EPS)&&(p1[i]-p2[i] < (EPS*-1)))
+                return false;
+        }
+        return ans;
 	}
 
 	/** 
@@ -109,11 +112,8 @@ public class Ex1 {
 	 * @return an x value (x1<=x<=x2) for which |p1(x) - p2(x)| < eps.
 	 */
 	public static double sameValue(double[] p1, double[] p2, double x1, double x2, double eps) {
-		double ans = x1;
-        /** add you code below
 
-         /////////////////// */
-		return ans;
+	return -1;
 	}
 	/**
 	 * Given a polynomial function (p), a range [x1,x2] and an integer with the number (n) of sample points.
@@ -175,23 +175,31 @@ public class Ex1 {
 	 * @return
 	 */
 	public static double[] add(double[] p1, double[] p2) {
-		double [] ans = ZERO;//
-        /** add you code below
-
-         /////////////////// */
+        int low = Math.min(p1.length,p2.length);
+        double [] ans;
+        if (p1.length >= p2.length)
+            ans = Arrays.copyOf(p1,p1.length);
+        else
+            ans = Arrays.copyOf(p2,p2.length);
+        for (int i = 0; i < low; i++)
+            ans[i] = p1[i]+p2[i];
 		return ans;
 	}
 	/**
-	 * This function computes the polynomial function which is the multiplication of two polynoms (p1,p2)
+	 * This function computes the polynomial function which is the multiplication of two polynomes (p1,p2)
 	 * @param p1
 	 * @param p2
 	 * @return
 	 */
 	public static double[] mul(double[] p1, double[] p2) {
-		double [] ans = ZERO;//
-        /** add you code below
-
-         /////////////////// */
+        double[] ans = new double[p1.length+p2.length-1];
+        for (int i = 0; i < p1.length; i++)
+        {
+            for (int j = 0; j < p2.length; j++)
+            {
+                ans[i+j] = p1[i]*p2[j];
+            }
+        }
 		return ans;
 	}
 	/**
@@ -200,10 +208,17 @@ public class Ex1 {
 	 * @return
 	 */
 	public static double[] derivative (double[] po) {
-		double [] ans = ZERO;//
-        /** add you code below
-
-         /////////////////// */
+        double [] ans;
+        if (po.length != 0)
+            ans = new double[po.length-1];
+        else
+        {
+            ans = new double[po.length];
+        }
+        for (int i = 0; i < ans.length; i++)
+        {
+            ans[i]=po[i+1]*(i+1);
+        }
 		return ans;
 	}
 }
