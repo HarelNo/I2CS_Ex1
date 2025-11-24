@@ -24,9 +24,11 @@ public class Ex1 {
 	 * @return f(x) - the polynomial function value at x.
 	 */
 	public static double f(double[] poly, double x) {
-		double ans = 0;
-		for(int i = 0 ;i < poly.length; i++) {
-			ans += Math.pow(x, i)*poly[i];
+        double ans = 0;
+        double exponent = 1;
+        for(int i = 0 ;i < poly.length; i++) {
+			ans += poly[i]*exponent;
+            exponent += exponent*x;
 		}
 		return ans;
 	}
@@ -145,9 +147,15 @@ public class Ex1 {
 	 * @return the length approximation of the function between f(x1) and f(x2).
 	 */
 	public static double length(double[] p, double x1, double x2, int numberOfSegments) {
-		double ans = x1;
-		return ans;
-	}
+        double ans = 0;
+        double h = 0, h2 = 0;
+        int i;
+        for (i = 0; i < numberOfSegments; i++)
+            h = i * ((x2 - x1) / numberOfSegments);
+            h2 = (i + 1) * ((x2 - x1) / numberOfSegments);
+            ans = vectorLength((x1 + h), f(p, x1 + h), x1 + h2, f(p,x1 + h2);
+        return ans;
+    }
 	
 	/**
 	 * Given two polynomial functions (p1,p2), a range [x1,x2] and an integer representing the number of Trapezoids between the functions (number of samples in on each polynom).
@@ -221,7 +229,8 @@ public class Ex1 {
 	 * @param po
 	 * @return
 	 */
-	public static double[] derivative (double[] po) {
+	public static double[] derivative (double[] po)
+    {
         double [] ans;
         if (po.length != 0)
             ans = new double[po.length-1];
@@ -237,12 +246,15 @@ public class Ex1 {
 	}
 
     /**
-     * This function computes the integral of the po polynomial function.
-     * @param po
+     * This function accepts 2 coordinates (x1,y1) and (x2,y2) and finds the distance between them.
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
      * @return
      */
-    public static double[] integral (double[] po){
-        double [] ans;
-
+    public static double vectorLength (int x1, int y1, int x2, int y2)
+    {
+        return Math.sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)));
     }
 }
