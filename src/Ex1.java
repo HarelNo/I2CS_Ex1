@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 /**
@@ -42,12 +41,12 @@ public class Ex1 {
 	 * @return an x value (x1<=x<=x2) for which |p(x)| < eps.
 	 */
 	public static double root_rec(double[] p, double x1, double x2, double eps) {
-		double f1 = f(p,x1);
-		double x12 = (x1+x2)/2;
-		double f12 = f(p,x12);
-		if (Math.abs(f12)<eps) {return x12;}
-		if(f12*f1<=0) {return root_rec(p, x1, x12, eps);}
-		else {return root_rec(p, x12, x2, eps);}
+		double start = f(p,x1);
+		double mid = (x1+x2)/2;
+		double midY = f(p,mid);
+		if (Math.abs(midY)<eps) {return mid;}
+		if(midY *start<=0) {return root_rec(p, x1, mid, eps);}
+		else {return root_rec(p, mid, x2, eps);}
 	}
 	/**
 	 * This function computes a polynomial representation from a set of 2D points on the polynom.
@@ -75,14 +74,17 @@ public class Ex1 {
 	 * @return true iff p1 represents the same polynomial function as p2.
 	 */
 	public static boolean equals(double[] p1, double[] p2) {
-		boolean ans = p1.length == p2.length;
-        if (!ans) {return false;};
-        for (int i = 0; i < p1.length; i++)
+    boolean ans = true;
+    int high  = Math.max(p1.length,p2.length);
+    for (double i = 0; i < high; i++)
         {
-            if ((p1[i]-p2[i] > EPS)&&(p1[i]-p2[i] < (EPS*-1)))
+            if(Math.abs(f(p1,i)-f(p2,i)) > EPS)
+            {
                 return false;
+            }
+
         }
-        return ans;
+    return ans;
 	}
 
 	/** 
@@ -112,8 +114,23 @@ public class Ex1 {
 	 * @return an x value (x1<=x<=x2) for which |p1(x) - p2(x)| < eps.
 	 */
 	public static double sameValue(double[] p1, double[] p2, double x1, double x2, double eps) {
+        double ans = -1;
+        double[] high, low;
+        if (p1.length >= p2.length) {
+            high = Arrays.copyOf(p1 ,p1.length);
+            low = Arrays.copyOf(p2 ,p2.length);
+        } else {
+            high = Arrays.copyOf(p2 ,p2.length);
+            low = Arrays.copyOf(p1 ,p1.length);
+        }
+        for (int i = 0; i < low.length; i++)
+        {
+            low[i] = (low[i]*-1);
+        }
 
-	return -1;
+        double[] third = Arrays.copyOf(add(high,low) ,add(high,low).length);
+        ans = root_rec(third,x1,x2,eps);
+	return ans;
 	}
 	/**
 	 * Given a polynomial function (p), a range [x1,x2] and an integer with the number (n) of sample points.
@@ -129,9 +146,6 @@ public class Ex1 {
 	 */
 	public static double length(double[] p, double x1, double x2, int numberOfSegments) {
 		double ans = x1;
-        /** add you code below
-
-         /////////////////// */
 		return ans;
 	}
 	
@@ -221,4 +235,14 @@ public class Ex1 {
         }
 		return ans;
 	}
+
+    /**
+     * This function computes the integral of the po polynomial function.
+     * @param po
+     * @return
+     */
+    public static double[] integral (double[] po){
+        double [] ans;
+
+    }
 }
