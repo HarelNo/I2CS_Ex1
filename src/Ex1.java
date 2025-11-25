@@ -61,17 +61,18 @@ public class Ex1 {
 		double [] ans = null;
 		int lx = xx.length;
 		int ly = yy.length;
-		if(xx==null || yy==null || lx!=ly || lx<1 || lx>4) {
+		if(xx==null || yy==null || lx!=ly || lx<1 || lx>4)
             return null;
-		}
         double [][] Matrix = new double[lx][ly+1];
-        for (int i = 0; i < lx; i++ )
+        for (int i = 0; i < lx; i++ ) // filling the matrix with numbers
         {
-            for (int j = 0; j < lx; i++)
+            for (int j = 0; j < lx; j++)
             {
-                Matrix[j][i] = 1*
+                Matrix[j][i] = pow(xx[i],j);
             }
         }
+
+
 		return ans;
 	}
 	/** Two polynomials functions are equal if and only if they have the same values f(x) for n+1 values of x,
