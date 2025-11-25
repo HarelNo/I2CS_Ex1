@@ -171,9 +171,27 @@ public class Ex1 {
 	 */
 	public static double area(double[] p1,double[]p2, double x1, double x2, int numberOfTrapezoid) {
 		double ans = 0;
-        /** add you code below
-
-         /////////////////// */
+        double trapY = 0, trapX = 0;
+        double[] high, low;
+        if (p1.length >= p2.length) {
+            high = Arrays.copyOf(p1 ,p1.length);
+            low = Arrays.copyOf(p2 ,p2.length);
+        } else {
+            high = Arrays.copyOf(p2 ,p2.length);
+            low = Arrays.copyOf(p1 ,p1.length);
+        }
+        for (int i = 0; i < low.length; i++)
+        {
+            low[i] = (low[i]*-1);
+        }
+        double[] third = Arrays.copyOf(add(high,low) ,add(high,low).length);
+        double segDiv2 = (double) numberOfTrapezoid/2;
+        for (int i = 0; i <= numberOfTrapezoid; i++)
+        {
+            trapX = (x2 - x1)/numberOfTrapezoid;
+            trapY = f(third,x1+(((x2-x1)/numberOfTrapezoid)*i)+((x2-x1)/(numberOfTrapezoid*2)));
+            ans += trapY*trapX;
+        }
 		return ans;
 	}
 	/**
@@ -257,5 +275,19 @@ public class Ex1 {
     public static double vectorLength (double x1, double y1, double x2, double y2)
     {
         return Math.sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)));
+    }
+
+    /**
+     * This function takes an array representing a polynome and returns it's integral polynome.
+     * @param arr
+     * @return
+     */
+    public static double[] integral (double[] arr){
+        double [] ans = new double[arr.length+1];
+        for (int i = 0; i < arr.length; i++)
+        {
+            ans[i+1] = (arr[i]/(i+1));
+        }
+        return ans;
     }
 }
