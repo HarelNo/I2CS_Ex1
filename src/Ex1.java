@@ -3,8 +3,7 @@ import java.util.Arrays;
 /**
  * Introduction to Computer Science 2026, Ariel University,
  * Ex1: arrays, static functions and JUnit
- * https://docs.google.com/document/d/1GcNQht9rsVVSt153Y8pFPqXJVju56CY4/edit?usp=sharing&ouid=113711744349547563645&rtpof=true&sd=true
- *
+ * <a href="https://docs.google.com/document/d/1GcNQht9rsVVSt153Y8pFPqXJVju56CY4/edit?usp=sharing&ouid=113711744349547563645&rtpof=true&sd=true">...</a>
  * This class represents a set of static methods on a polynomial functions - represented as an array of doubles.
  * The array {0.1, 0, -3, 0.2} represents the following polynomial function: 0.2x^3-3x^2+0.1
  * This is the main Class you should implement (see "add your code below")
@@ -20,7 +19,7 @@ public class Ex1 {
 	/**
 	 * Computes the f(x) value of the polynomial function at x.
 	 * @param poly - polynomial function
-	 * @param x
+	 * @param x - the value being searched
 	 * @return f(x) - the polynomial function value at x.
 	 */
 	public static double f(double[] poly, double x) {
@@ -62,11 +61,17 @@ public class Ex1 {
 		double [] ans = null;
 		int lx = xx.length;
 		int ly = yy.length;
-		if(xx!=null && yy!=null && lx==ly && lx>1 && lx<4) {
-		/** add you code below
-
-		/////////////////// */
+		if(xx==null || yy==null || lx!=ly || lx<1 || lx>4) {
+            return null;
 		}
+        double [][] Matrix = new double[lx][ly+1];
+        for (int i = 0; i < lx; i++ )
+        {
+            for (int j = 0; j < lx; i++)
+            {
+                Matrix[j][i] = 1*
+            }
+        }
 		return ans;
 	}
 	/** Two polynomials functions are equal if and only if they have the same values f(x) for n+1 values of x,
@@ -289,5 +294,21 @@ public class Ex1 {
             ans[i+1] = (arr[i]/(i+1));
         }
         return ans;
+    }
+
+    /**
+     * This function calculates a simple power operation while assuming the exponent is a natural number (a^b)
+     * @param a - base value
+     * @param b - Exponent
+     * @return - a^b
+     */
+    public static double pow (double a, double b)
+    {
+        double pow = 1;
+        for (int i = 0; i < b; i++)
+        {
+            pow = pow * a;
+        }
+        return pow;
     }
 }
