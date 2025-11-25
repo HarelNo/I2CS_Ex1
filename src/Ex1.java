@@ -150,10 +150,11 @@ public class Ex1 {
         double ans = 0;
         double h = 0, h2 = 0;
         int i;
-        for (i = 0; i < numberOfSegments; i++)
-            h = i * ((x2 - x1) / numberOfSegments);
-            h2 = (i + 1) * ((x2 - x1) / numberOfSegments);
-            ans = vectorLength((x1 + h), f(p, x1 + h), x1 + h2, f(p,x1 + h2);
+        for (i = 0; i < (numberOfSegments+1); i++) {
+            h = i * ((x2 - x1) / (numberOfSegments + 1));
+            h2 = (i + 1) * ((x2 - x1) / (numberOfSegments + 1));
+            ans += vectorLength((x1 + h), f(p, x1 + h), x1 + h2, f(p, x1 + h2));
+        }
         return ans;
     }
 	
@@ -253,7 +254,7 @@ public class Ex1 {
      * @param y2
      * @return
      */
-    public static double vectorLength (int x1, int y1, int x2, int y2)
+    public static double vectorLength (double x1, double y1, double x2, double y2)
     {
         return Math.sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)));
     }
