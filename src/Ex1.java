@@ -61,19 +61,30 @@ public class Ex1 {
 		double [] ans = null;
 		int lx = xx.length;
 		int ly = yy.length;
-		if(xx==null || yy==null || lx!=ly || lx<1 || lx>4)
+		if(xx==null || yy==null || lx!=ly || lx<1 || lx>3)
             return null;
-        double [][] Matrix = new double[lx][ly+1];
-        for (int i = 0; i < lx; i++ ) // filling the matrix with numbers
-        {
-            for (int j = 0; j < lx; j++)
-            {
-                Matrix[j][i] = pow(xx[i],j);
-            }
+        if(lx == 3){
+            double denom = (xx[0] - xx[1])*(xx[0] - xx[2])*(xx[1] - xx[2]);
+            double A = (xx[2] * (yy[1] - yy[0]) + xx[1] * (yy[0] - yy[2]) + xx[0] * (yy[2] - yy[1])) / denom;
+            double B = (pow(xx[2],2) * (yy[0] - yy[1]) + pow(xx[1],2) * (yy[2] - yy[0]) + pow(xx[0],2) * (yy[1] - yy[2])) / denom;
+            double C = (xx[1] * xx[2] * (xx[1] - xx[2]) * yy[0] + xx[2] * xx[0] * (xx[2] - xx[0]) * yy[1] + xx[0] * xx[1] * (xx[0] - xx[1]) * yy[2]) / denom;
+
+            ans[0] = C;
+            ans[1] = B;
+            ans[2] = A;
+        } else if (lx == 2) {
+            double A = (yy[1] - yy[0])/(xx[1] - xx[0]);
+            double B = yy[0] - (A*xx[0]);
+
+            ans[0] = B;
+            ans[1] = A;
+        }
+        else {
+            ans[0] = yy[0];
         }
 
 
-		return ans;
+        return ans;
 	}
 	/** Two polynomials functions are equal if and only if they have the same values f(x) for n+1 values of x,
 	 * where n is the max degree (over p1, p2) - up to an epsilon (aka EPS) value.
