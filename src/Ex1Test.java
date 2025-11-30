@@ -18,15 +18,22 @@ class Ex1Test {
 	static double[] po1 = {2,2}, po2 = {-3, 0.61, 0.2};;
 	static double[] po3 = {2,1,-0.7, -0.02,0.02};
 	static double[] po4 = {-3, 0.61, 0.2};
+    static double[] empty = {};
+    static double[] single = {5};
 	
  	@Test
 	/**
 	 * Tests that f(x) == poly(x).
+     * added edge cases where the array is empty and when it's a horizontal line
 	 */
 	void testF() {
 		double fx0 = Ex1.f(po1, 0);
 		double fx1 = Ex1.f(po1, 1);
 		double fx2 = Ex1.f(po1, 2);
+        double fxEmpty = Ex1.f(empty, 10);
+        double fxSingle = Ex1.f(single, 13);
+        assertEquals(fxEmpty,0, Ex1.EPS);
+        assertEquals(fxSingle, 5, Ex1.EPS);
 		assertEquals(fx0, 2, Ex1.EPS);
 		assertEquals(fx1, 4, Ex1.EPS);
 		assertEquals(fx2, 6, Ex1.EPS);
@@ -202,6 +209,10 @@ class Ex1Test {
 		assertEquals(a1,area, Ex1.EPS);
 	}
     @Test
+    /**
+     * Test the poly function (array to string)
+     * edge case is a single high degree object
+     */
     public void polyTest(){
         double[] a = {2,0,3.1,-1.2};
         String a1 = "-1.2x^3 +3.1x^2 +2.0";
@@ -210,4 +221,28 @@ class Ex1Test {
         assertEquals(a1, Ex1.poly(a));
         assertEquals(b1, Ex1.poly(b));
     }
+    @Test
+    /**
+     *Test the PolyFromPoints function (
+     */
+    public void PolyFromPointsTest(){
+        double[] a = {3,-4,1};
+        double[] ax = {0,1,2};
+        double[] ay = {3,0,-1};
+        double[] as = Ex1.PolynomFromPoints(ax,ay);
+        assertEquals(as[0],a[0]);
+        assertEquals(as[1],a[1]);
+        assertEquals(as[2],a[2]);
+        // edge case where the 3 coordinates are on a single linear line
+        double[] bx = {2,2,2};
+        double[] by = {3,4,5};
+        double[] bs = Ex1.PolynomFromPoints(bx,by);
+        assertEquals(bs,null);
+        //edge case where there are 2 coordinates that are duplicates
+        double[] cx = {1,1};
+        double[] cy = {2,2};
+        double[] cs = Ex1.PolynomFromPoints(cx,cy);
+        assertEquals(cs,null);
+    }
+
 }
