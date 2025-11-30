@@ -117,6 +117,10 @@ public class Ex1 {
 	 * Computes a String representing the polynomial function.
 	 * For example the array {2,0,3.1,-1.2} will be presented as the following String  "-1.2x^3 +3.1x^2 +2.0"
 	 * @param poly the polynomial function represented as an array of doubles
+     *
+     * this function will scan the array from the highest value to the lowest, attach a "+" sign when needed and adds the correct x^n marking (when needed)
+     * this function will NOT display {0,0,0,1} as x^3 but as 1.0x^3 as it is not require to correct in the task
+     * this function also requires a proper array, example of a bad array: {1,3,0,0}
 	 * @return String representing the polynomial function:
 	 */
 	public static String poly(double[] poly) {
@@ -348,5 +352,16 @@ public class Ex1 {
             pow = pow * a;
         }
         return pow;
+    }
+    public static void shave(double a[]){
+        int i = a.length-1;
+        int count = 0;
+        while ((i >= 0)&&(a[i] == 0)) {
+            if (a[i] == 0){
+                count++;
+            }
+            i--;
+        }
+
     }
 }

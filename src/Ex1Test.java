@@ -201,4 +201,13 @@ class Ex1Test {
 		double area = 58.5658;
 		assertEquals(a1,area, Ex1.EPS);
 	}
+    @Test
+    public void polyTest(){
+        double[] a = {2,0,3.1,-1.2};
+        String a1 = "-1.2x^3 +3.1x^2 +2.0";
+        double[] b = {0,0,0,0,5};
+        String b1 = "5.0x^4";
+        assertEquals(a1, Ex1.poly(a));
+        assertEquals(b1, Ex1.poly(b));
+    }
 }
