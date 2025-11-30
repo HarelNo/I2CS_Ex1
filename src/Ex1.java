@@ -118,7 +118,7 @@ public class Ex1 {
 	 * For example the array {2,0,3.1,-1.2} will be presented as the following String  "-1.2x^3 +3.1x^2 +2.0"
 	 * @param poly the polynomial function represented as an array of doubles
      *
-     * this function will scan the array from the highest value to the lowest, attach a "+" sign when needed and adds the correct x^n marking (when needed)
+     * this function will scan the array from the highest value to the lowest, attach a "+" sign when needed and then adds the correct x^n marking (when needed)
      * this function will NOT display {0,0,0,1} as x^3 but as 1.0x^3 as it is not require to correct in the task
      * this function also requires a proper array, example of a bad array: {1,3,0,0}
 	 * @return String representing the polynomial function:
@@ -271,7 +271,7 @@ public class Ex1 {
             ans = Arrays.copyOf(p2,p2.length);
         for (int i = 0; i < low; i++)
             ans[i] = p1[i]+p2[i];
-		return ans;
+		return shave(ans);
 	}
 	/**
 	 * This function computes the polynomial function which is the multiplication of two polynomes (p1,p2)
@@ -353,15 +353,25 @@ public class Ex1 {
         }
         return pow;
     }
-    public static void shave(double a[]){
+
+    /**
+     * This functions removes the highest degree objects if they are 0
+     * if the polynomial is empty this function will return an empty array
+     * @param a - array
+     * @return ans - fixed array without the excess
+     */
+    public static double[] shave(double a[]){
         int i = a.length-1;
         int count = 0;
-        while ((i >= 0)&&(a[i] == 0)) {
-            if (a[i] == 0){
-                count++;
-            }
+        while ((i >= 0)&&(Math.abs(a[i]) <= EPS)) {
+            count++;
             i--;
         }
-
+        double[] ans = new double[a.length-count];
+        for(int j = 0; j < ans.length; j++)
+        {
+            ans[j] = a[j];
+        }
+        return ans;
     }
 }
