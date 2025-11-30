@@ -18,6 +18,8 @@ public class Ex1 {
 	public static final double[] ZERO = {0};
 	/**
 	 * Computes the f(x) value of the polynomial function at x.
+     *
+     * This functions finds the Y value of a function at a given X by simply solving it.
 	 * @param poly - polynomial function
 	 * @param x - the value being searched
 	 * @return f(x) - the polynomial function value at x.
@@ -35,6 +37,9 @@ public class Ex1 {
 	 * This function computes an x value (x1<=x<=x2) for which |p(x)| < eps, 
 	 * assuming p(x1)*p(x2) <= 0.
 	 * This function should be implemented recursively.
+     *
+     * This function finds when a function's Y value is 0 within a range by checking if the Y center of the range is 0
+     * if it's not 0 the range gets cut in half and chooses the half to recur as the new range
 	 * @param p - the polynomial function
 	 * @param x1 - minimal value of the range
 	 * @param x2 - maximal value of the range
@@ -95,6 +100,9 @@ public class Ex1 {
 	}
 	/** Two polynomials functions are equal if and only if they have the same values f(x) for n+1 values of x,
 	 * where n is the max degree (over p1, p2) - up to an epsilon (aka EPS) value.
+     * -------------------------------------------------------------------------------------------------------
+     * This function checks the Y value at n+1 values with an equal distance from one another
+     * if they are all true the functions returns true and if else false
 	 * @param p1 first polynomial function
 	 * @param p2 second polynomial function
 	 * @return true iff p1 represents the same polynomial function as p2.
@@ -117,7 +125,7 @@ public class Ex1 {
 	 * Computes a String representing the polynomial function.
 	 * For example the array {2,0,3.1,-1.2} will be presented as the following String  "-1.2x^3 +3.1x^2 +2.0"
 	 * @param poly the polynomial function represented as an array of doubles
-     *
+     *------------------------------------------------------------------------------------------------------------------------------------------------------------
      * this function will scan the array from the highest value to the lowest, attach a "+" sign when needed and then adds the correct x^n marking (when needed)
      * this function will NOT display {0,0,0,1} as x^3 but as 1.0x^3 as it is not require to correct in the task
      * this function also requires a proper array, example of a bad array: {1,3,0,0}
@@ -155,6 +163,9 @@ public class Ex1 {
 	/**
 	 * Given two polynomial functions (p1,p2), a range [x1,x2] and an epsilon eps. This function computes an x value (x1<=x<=x2)
 	 * for which |p1(x) -p2(x)| < eps, assuming (p1(x1)-p2(x1)) * (p1(x2)-p2(x2)) <= 0.
+     * ----------------------------------------------------------------------------------------------------------------------------------
+     * This function takes checks for the function with the lesser degree and multiplies it by -1 and then adds the two functions
+     * essentially making a G(x) = f(x) - g(x) and then checks where G(x) touches the X axis (y = 0) using root_rec
 	 * @param p1 - first polynomial function
 	 * @param p2 - second polynomial function
 	 * @param x1 - minimal value of the range
@@ -187,6 +198,8 @@ public class Ex1 {
 	 * using n inner sample points and computing the segment-path between them.
 	 * assuming x1 < x2. 
 	 * This function should be implemented iteratively (none recursive).
+     * ----------------------------------------------------------------------------------------------------------------------------------
+     * This function separates the function to segments and checks the length of the vector between the start of each segment to the next
 	 * @param p - the polynomial function
 	 * @param x1 - minimal value of the range
 	 * @param x2 - maximal value of the range
@@ -209,6 +222,9 @@ public class Ex1 {
 	 * Given two polynomial functions (p1,p2), a range [x1,x2] and an integer representing the number of Trapezoids between the functions (number of samples in on each polynom).
 	 * This function computes an approximation of the area between the polynomial functions within the x-range.
 	 * The area is computed using Riemann's like integral (https://en.wikipedia.org/wiki/Riemann_integral)
+     * ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     * This function divides the range given into numberOfTrapezoids-1 and stretches rectangles with their width as the segment's length and the height as the middle of the segment's Y value
+     * note that the wiki page contains the Midpoint Riemann Sum Implementation which works with rectangles and vaguely asks for trapezoids but i chose to use what was given in the wiki
 	 * @param p1 - first polynomial function
 	 * @param p2 - second polynomial function
 	 * @param x1 - minimal value of the range
@@ -258,9 +274,11 @@ public class Ex1 {
 	}
 	/**
 	 * This function computes the polynomial function which is the sum of two polynomial functions (p1,p2)
-	 * @param p1
-	 * @param p2
-	 * @return
+     * -------------------------------------------------------------------------------------------------------------------------------------------------------------
+     * This function simply adds each degree in the polynomials with each other and then eliminates the highest degrees if they are 0 by using the shave function
+	 * @param p1 - polynomial 1
+	 * @param p2 - polynomial 2
+	 * @return - a polynomial that's the sum of p1 and p2
 	 */
 	public static double[] add(double[] p1, double[] p2) {
         int low = Math.min(p1.length,p2.length);
@@ -275,6 +293,10 @@ public class Ex1 {
 	}
 	/**
 	 * This function computes the polynomial function which is the multiplication of two polynomes (p1,p2)
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+     * This functions creates and array with the length that's able to contain the highest degree multiplication between the two polynomials
+     * and then multiplies each object from p1 with each object from p2 and adds the results
+     * note that the length is always consistent because for the highest degree to be 0 either p1 or p2 would have to be improper (have a 0 as their highest degree)
 	 * @param p1
 	 * @param p2
 	 * @return
@@ -312,12 +334,12 @@ public class Ex1 {
 	}
 
     /**
-     * This function accepts 2 coordinates (x1,y1) and (x2,y2) and finds the distance between them.
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
-     * @return
+     * This function accepts 2 coordinates (x1,y1) and (x2,y2) and finds the distance between them using the pythagoras theorem.
+     * @param x1 - coordinate 1's x
+     * @param y1 - coordinate 1's y
+     * @param x2 - coordinate 2's x
+     * @param y2 - coordinate 2's y
+     * @return - length of the vector made by the two coordinates
      */
     public static double vectorLength (double x1, double y1, double x2, double y2)
     {
@@ -326,6 +348,7 @@ public class Ex1 {
 
     /**
      * This function takes an array representing a polynome and returns it's integral polynome.
+     * in the end i didn't use this for anything
      * @param arr
      * @return
      */
@@ -340,6 +363,7 @@ public class Ex1 {
 
     /**
      * This function calculates a simple power operation while assuming the exponent is a natural number (a^b)
+     * I made this to make simple power actions more efficient
      * @param a - base value
      * @param b - Exponent
      * @return - a^b
