@@ -27,7 +27,7 @@ public class Ex1 {
         double exponent = 1;
         for(int i = 0 ;i < poly.length; i++) {
 			ans += poly[i]*exponent;
-            exponent += exponent*x;
+            exponent *= x;
 		}
 		return ans;
 	}
@@ -58,13 +58,16 @@ public class Ex1 {
 	 * @return an array of doubles representing the coefficients of the polynom.
 	 */
 	public static double[] PolynomFromPoints(double[] xx, double[] yy) {
-		double [] ans = null;
+		double [] ans;
 		int lx = xx.length;
 		int ly = yy.length;
 		if(xx==null || yy==null || lx!=ly || lx<1 || lx>3)
             return null;
         if(lx == 3){
+            ans = new double[3];
             double denom = (xx[0] - xx[1])*(xx[0] - xx[2])*(xx[1] - xx[2]);
+            if (Math.abs(denom) < 1e-9) // if the denom is 0 (all 3 points are on a line(linear function)) it will return null
+                return null;
             double A = (xx[2] * (yy[1] - yy[0]) + xx[1] * (yy[0] - yy[2]) + xx[0] * (yy[2] - yy[1])) / denom;
             double B = (pow(xx[2],2) * (yy[0] - yy[1]) + pow(xx[1],2) * (yy[2] - yy[0]) + pow(xx[0],2) * (yy[1] - yy[2])) / denom;
             double C = (xx[1] * xx[2] * (xx[1] - xx[2]) * yy[0] + xx[2] * xx[0] * (xx[2] - xx[0]) * yy[1] + xx[0] * xx[1] * (xx[0] - xx[1]) * yy[2]) / denom;
@@ -73,6 +76,9 @@ public class Ex1 {
             ans[1] = B;
             ans[2] = A;
         } else if (lx == 2) {
+            if (Math.abs(xx[0]-xx[1]) < 1e-9) // if the two coordinates are the same then there are infinity answers (but ill be returning null)
+                return null;
+            ans = new double[2];
             double A = (yy[1] - yy[0])/(xx[1] - xx[0]);
             double B = yy[0] - (A*xx[0]);
 
@@ -80,6 +86,7 @@ public class Ex1 {
             ans[1] = A;
         }
         else {
+            ans = new double[1];
             ans[0] = yy[0];
         }
 
@@ -95,7 +102,7 @@ public class Ex1 {
 	public static boolean equals(double[] p1, double[] p2) {
     boolean ans = true;
     int high  = Math.max(p1.length,p2.length);
-    for (double i = 0; i < high; i++)
+    for (int i = 0; i < high; i++)
         {
             if(Math.abs(f(p1,i)-f(p2,i)) > EPS)
             {
@@ -113,14 +120,33 @@ public class Ex1 {
 	 * @return String representing the polynomial function:
 	 */
 	public static String poly(double[] poly) {
-		String ans = "";
-		if(poly.length==0) {ans="0";}
+        StringBuilder sb = new StringBuilder("0");
+		if(poly.length==0)
+        {
+             sb = new StringBuilder("0");
+        }
 		else {
-            /** add you code below
-
-             /////////////////// */
+            sb = new StringBuilder();
+            for(int i = poly.length-1; i >= 0 ; i--)
+            {
+                if (Math.abs(poly[i]) > 1e-9)
+                {
+                    if ((poly[i] >= 0)&&(i != poly.length-1))
+                        sb.append(" +");
+                    else if ((poly[i]<0)&&(i != poly.length-1)) {
+                        sb.append(" ");
+                    }
+                    if (i == 0)
+                        sb.append(poly[i]);
+                    else if (i == 1)
+                        sb.append(poly[i]+"x");
+                    else
+                        sb.append(poly[i]+"x^"+i);
+                }
+            }
 		}
-		return ans;
+        System.out.println(sb);
+		return sb.toString();
 	}
 	/**
 	 * Given two polynomial functions (p1,p2), a range [x1,x2] and an epsilon eps. This function computes an x value (x1<=x<=x2)
@@ -203,13 +229,13 @@ public class Ex1 {
         }
         double[] third = Arrays.copyOf(add(high,low) ,add(high,low).length);
         double segDiv2 = (double) numberOfTrapezoid/2;
-        for (int i = 0; i <= numberOfTrapezoid; i++)
+        for (int i = 0; i < numberOfTrapezoid; i++)
         {
             trapX = (x2 - x1)/numberOfTrapezoid;
             trapY = f(third,x1+(((x2-x1)/numberOfTrapezoid)*i)+((x2-x1)/(numberOfTrapezoid*2)));
             ans += trapY*trapX;
         }
-		return ans;
+		return Math.abs(ans);
 	}
 	/**
 	 * This function computes the array representation of a polynomial function from a String
@@ -255,7 +281,7 @@ public class Ex1 {
         {
             for (int j = 0; j < p2.length; j++)
             {
-                ans[i+j] = p1[i]*p2[j];
+                ans[i+j] += p1[i]*p2[j];
             }
         }
 		return ans;
